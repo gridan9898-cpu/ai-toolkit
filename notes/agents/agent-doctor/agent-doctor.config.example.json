@@ -1,0 +1,29 @@
+{
+  "_comment": "Пример конфига agent-doctor. Скопируй в ~/.claude/agent-doctor.config.json (личный) или .agent-doctor.json (в корне проекта). ВСЕ ключи опциональны — без конфига работают универсальные проверки (мёртвые пути, валидность модели, битые ссылки на агентов, не-агентные файлы). Конфиг добавляет проверки под твою систему.",
+
+  "agents_dir": "~/.claude/agents",
+  "skills_dir": "~/.claude/skills",
+
+  "_thinking_agents": "Имена агентов, которым по роли нужна сильная модель. Если такой сидит на лёгкой (light_models) — advisory-флаг. Пусто = проверка выключена.",
+  "thinking_agents": [],
+
+  "light_models": ["fable", "haiku", "claude-fable-5", "claude-haiku-4-5"],
+
+  "_valid_models": "Дополни своими, если используешь модели вне дефолта. Невалидная модель в frontmatter = ошибка.",
+  "valid_models": ["fable", "sonnet", "opus", "haiku", "inherit"],
+  "valid_model_prefixes": ["claude-", "anthropic/"],
+
+  "_stale_patterns": "Твои отменённые формулировки/концепции. Если поменял продукт/подход — впиши старые фразы, чтобы ловить агентов, которые за них ещё держатся. reason показывается в отчёте. Пусто = выключено.",
+  "stale_patterns": [
+    {"pattern": "старое название продукта", "reason": "переименовано в 2026"}
+  ],
+
+  "_state_dir_prefixes": "Каталоги, где агент создаёт файлы на первой задаче. Отсутствие файла тут — мягкий warn, не error.",
+  "state_dir_prefixes": ["~/personal/"],
+
+  "_known_nonagents": "Токены в бэктиках, похожие на ссылку-на-агента, но агентами не являющиеся (репо, теги).",
+  "known_nonagents": [],
+
+  "_skip_skill_substrings": "Вендорные скил-паки, чьи внутренние примеры/доки не сканируем.",
+  "skip_skill_substrings": ["superpowers"]
+}

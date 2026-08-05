@@ -8,6 +8,7 @@
 - `registry/generate.py` — пересобирает `registry.md` из `~/.claude/` (skills, plugins, `~/.claude.json` → mcpServers). Запуск: `python3 registry/generate.py`.
 - `notes/skills/` — заметки-обзоры про skills: концепты, чужие подборки, конкретные skills на примете.
 - `notes/mcp/` — то же для MCP.
+- `notes/agents/` — субагенты: конфиги, README, готовые агенты под конкретные роли (`agent-doctor` — линтер конфигов агентов/skills).
 
 ## Обновить реестр
 
