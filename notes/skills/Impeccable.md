@@ -1,7 +1,7 @@
 ---
 type: note
 created: 2026-07-05
-updated: 2026-07-05
+updated: 2026-08-07
 status: seed
 source: "https://github.com/pbakaus/impeccable"
 moc: "[[AI]]"
@@ -14,108 +14,60 @@ tags:
 ---
 # Impeccable
 
-**Impeccable** — набор design guidance для AI coding agents: 1 skill, 23 команды, live browser iteration и 45 детерминированных правил для детекта типичных AI-generated frontend design анти-паттернов.
+**Impeccable** — skill для AI coding agents, который ведёт работу с UI от контекста продукта до проверяемой финальной полировки. Это не «сделай красиво», а контур: сформировать design direction, реализовать, проверить в браузере и ограниченно исправить.
 
-Источник: [GitHub — pbakaus/impeccable](https://github.com/pbakaus/impeccable)  
-Документация: [impeccable.style](https://impeccable.style)  
-npm: `impeccable`, версия на момент добавления — `3.2.0`, лицензия Apache-2.0.
+Источник: [GitHub — pbakaus/impeccable](https://github.com/pbakaus/impeccable) · [документация](https://impeccable.style). Проверенная версия: `4.0.4`, коммит `aee6ce9352b842217b3f57c78296a7a4fa35a7f3` от 2026-08-04. Лицензия Apache-2.0.
 
-## Что это
+## Что даёт
 
-Инструмент вырос из [[Frontend design|frontend-design]] skill от Anthropic, но добавляет более полный рабочий контур для AI-дизайна:
+- Работает с лендингами, продуктовым UI, дашбордами, формами, онбордингом и дизайн-системами.
+- Перед правкой подгружает контекст из `PRODUCT.md`, `DESIGN.md` и surface brief; не начинает с вкусовщины в вакууме.
+- Разводит **refinement** (сохраняет существующую идентичность) и **redesign** (заменяет визуальный мир, не ломая продуктовую правду и функцию).
+- Есть отдельные режимы для нового экрана, UX-критики, техаудита, полировки, responsive, accessibility, производительности, UX-copy, motion и live-итераций в браузере.
+- Требует ограниченный QA-цикл: один пакетный просмотр desktop/mobile → один пакет исправлений → максимум один повторный контроль. Не уходит в бесконечное «полирование» за деньги и токены.
 
-- **setup flow**: `npx impeccable install` → `/impeccable init`;
-- создаёт/использует `PRODUCT.md` и предлагает `DESIGN.md`, чтобы агент понимал аудиторию, бренд, voice, цвета, типографику, компоненты и анти-референсы;
-- даёт команды для общей дизайн-лексики с агентом: `audit`, `polish`, `critique`, `distill`, `animate`, `bolder`, `quieter` и др.;
-- включает **45 deterministic detector rules** без LLM/API key для проверки типичных AI-дизайн-штампов;
-- поддерживает live browser iteration и browser extension.
+## Основные команды
 
-## Зачем Данилу
-
-Полезно для вайбкодинга, лендингов, CRM/UI-прототипов и личных AI-проектов, где главная проблема — не «сверстать», а убрать типичный AI-вайб:
-
-- Inter everywhere;
-- фиолетово-синие градиенты;
-- cards in cards;
-- серый текст на цветном фоне;
-- rounded-square icon tile над каждым заголовком;
-- визуальная «SaaS-шаблонность» без характера продукта.
-
-Практическая ценность: сделать дизайн отдельной проверяемой фазой, а не надеяться, что coding agent сам «сделает красиво».
+| Задача | Команда |
+|---|---|
+| Спланировать UX/UI до кода | `shape [feature]` |
+| Зафиксировать контекст продукта | `init` |
+| Извлечь дизайн-систему из существующего проекта | `document` / `extract [target]` |
+| Провести UX review | `critique [target]` |
+| Проверить a11y, performance и responsive | `audit [target]` |
+| Довести экран перед релизом | `polish [target]` |
+| Усилить или успокоить визуальный характер | `bolder [target]` / `quieter [target]` |
+| Убрать лишнее | `distill [target]` |
+| Проверить ошибки, i18n и edge cases | `harden [target]` |
+| Добавить осмысленный motion | `animate [target]` |
+| Адаптировать под устройства | `adapt [target]` |
+| Итерации по элементам прямо в браузере | `live` |
 
 ## Как применять
 
-Базовый сценарий в проекте:
+1. Установить в конкретный coding-agent workflow согласно актуальной инструкции репозитория: `npx impeccable install`.
+2. В новом проекте сначала дать агенту `init`, затем `shape` или обычный запрос на новую поверхность.
+3. В существующем интерфейсе сначала выбрать характер задачи: сохранить и улучшить текущую систему или сознательно переделать её. Это важнее, чем сразу писать CSS.
+4. Перед релизом прогнать `audit`, затем `polish`; проверить desktop и mobile в одном проходе.
+5. `live` использовать, когда статический просмотр кода не позволяет оценить реальное восприятие и поведение UI.
 
-```bash
-npx impeccable install
-```
+## Зачем Данилу
 
-Потом внутри AI coding tool:
+Подходит для лендингов, портфолио, интерфейсов CRM и внутренних AI-инструментов. Главная польза — сделать дизайн отдельной проверяемой фазой, а не рассчитывать, что Claude/Codex сам по себе не соберёт шаблонный AI-интерфейс.
 
-```text
-/impeccable init
-/impeccable audit
-/impeccable polish
-/impeccable critique
-/impeccable distill
-```
+Но это не замена продуктовой логике: сначала ясны пользователь, сценарий, ограничения и контент. Иначе skill может аккуратно отполировать неверный экран.
 
-Фокусные команды:
+## Ограничения
 
-```text
-/impeccable audit the header
-/impeccable polish the checkout form
-```
-
-Если команда нужна часто, её можно закрепить:
-
-```text
-/impeccable pin audit
-```
-
-## Поддерживаемые инструменты
-
-- Cursor
-- Claude Code
-- GitHub Copilot
-- Gemini CLI
-- Codex CLI
-- OpenCode
-- Pi
-- Kiro
-- Trae
-- Rovo Dev
-- Qoder
-
-Для Codex CLI используются skills, не `/prompts:` commands. Repo-local installs живут в `.agents/skills/`, user-wide installs — в `~/.agents/skills/`.
-
-## Важное по `.impeccable`
-
-Impeccable пишет рабочие файлы в `.impeccable/`: скриншоты, live-mode state, cache, local config. Большая часть — ephemeral и не должна попадать в git.
-
-Shared artifacts, которые могут быть полезны в репозитории:
-
-- `.impeccable/config.json`
-- `.impeccable/live/config.json`
-- `.impeccable/design.json`
-- `.impeccable/critique/*.md`
-
-Перед коммитом проекта с Impeccable надо отдельно проверить `.gitignore`.
-
-## Где использовать первым
-
-1. Маленький лендинг / product page для портфолио.
-2. UI-прототип CRM/дашборда для агентства.
-3. Финальная полировка интерфейса после генерации в Claude/Codex.
-4. Аудит чужого AI-generated frontend перед публикацией.
+- Skill не создаёт реальное пользовательское исследование и не подтверждает, что интерфейс решает бизнес-задачу.
+- Скриншот и lint не заменяют ручную проверку ключевого сценария, форм, ошибок и мобильного поведения.
+- Визуальный референс конкурента можно использовать как доказательство направления и композиции, но не как объект для слепого копирования: бренд, контент, legal-ограничения и сценарий остаются своими.
 
 ## Связи
 
-- [[Frontend design]] — базовая логика: дизайн как отдельная фаза.
-- [[Taste Skill]] — соседний anti-slop инструмент со стилевыми пресетами (dials).
-- [[Hallmark]] — соседний anti-slop инструмент с 57 slop-test gates и извлечением design DNA.
-- [[Make Interfaces Feel Better]] — ручная/агентная полировка интерфейсов.
-- [[Modern Web Guidance]] — современные web/UI-практики.
-- [[designmd.supply]] — хранение дизайн-систем и бренд-гайдов в Markdown.
+- [[Frontend design]] — базовая логика: дизайн как отдельная фаза разработки.
+- [[Emil Kowalski — Design Engineering]] — точечные правила вкуса, motion и component craft.
+- [[Apple Design — fluid UI skill]] — guidance для gesture-driven и fluid interactions.
+- [[Taste Skill]] — anti-slop инструмент со стилевыми пресетами.
+- [[Hallmark]] — design DNA и slop-test gates.
 - [[AI]] — MOC по AI-инструментам и вайбкодингу.
