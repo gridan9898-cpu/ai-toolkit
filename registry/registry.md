@@ -1,6 +1,6 @@
 # Registry — installed skills / plugins / MCP
 
-> Auto-generated 2026-08-05 by `registry/generate.py`. Re-run after installing/removing anything. Source of truth is this machine's `~/.claude/`, not this file — regenerate, don't hand-edit.
+> Auto-generated 2026-08-19 by `registry/generate.py`. Re-run after installing/removing anything. Source of truth is this machine's `~/.claude/`, not this file — regenerate, don't hand-edit.
 
 ## Personal skills (`~/.claude/skills`)
 
@@ -8,6 +8,7 @@
 - brand
 - bulletproof
 - canvas-design
+- copywriter-ru
 - copywriting
 - design
 - design-system
@@ -46,3 +47,4 @@
 - context7
 - magic
 - stitch
+- ticktick
